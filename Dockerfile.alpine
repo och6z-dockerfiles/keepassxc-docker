@@ -1,0 +1,21 @@
+ARG IMAGE_VERSION
+
+FROM alpine:${IMAGE_VERSION}
+
+RUN apk update \
+    && apk add --no-cache \
+    ttf-dejavu \
+    mesa-dri-intel \
+    keepassxc \
+    && rm -rf /var/cache/apk/*
+
+ENV MESA_LOADER_DRIVER_OVERRIDE i965
+ENV XDG_RUNTIME_DIR /tmp/runtime-root
+
+ENTRYPOINT ["/bin/sh", "-c"]
+
+CMD ["keepassxc"]
+
+#docker build --no-cache --build-arg IMAGE_VERSION=latest --file Dockerfile.alpine --tag image-name:version .
+#xhost +local:docker
+#docker run --interactive --tty --volume /etc/machine-id:/etc/machine-id:ro --volume /tmp/.X11-unix:/tmp/.X11-unix --volume /usr/share/X11/xkb:/usr/share/X11/xkb/:ro --volume $HOME/.config/keepassxc:/root/.config/keepassxc --env DISPLAY=unix$DISPLAY --name container-name image-name:version
