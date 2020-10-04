@@ -17,4 +17,5 @@ CMD ["keepassxc"]
 
 #docker build --no-cache --build-arg IMAGE_VERSION=unstable-slim --file Dockerfile.debian --tag image-name:version .
 #xhost +local:docker
-#docker run --interactive --tty --volume /etc/machine-id:/etc/machine-id:ro --volume /tmp/.X11-unix:/tmp/.X11-unix --volume /usr/share/X11/xkb:/usr/share/X11/xkb/:ro --volume $HOME/.config/keepassxc:/root/.config/keepassxc --env DISPLAY=unix$DISPLAY --name container-name image-name:version
+#docker volume create volume-name
+#docker run --interactive --tty --volume /etc/machine-id:/etc/machine-id:ro --volume /tmp/.X11-unix:/tmp/.X11-unix --volume /usr/share/X11/xkb:/usr/share/X11/xkb/:ro --mount source=volume-name,target=/root/.config/keepassxc --env DISPLAY=unix$DISPLAY --name container-name image-name:version
